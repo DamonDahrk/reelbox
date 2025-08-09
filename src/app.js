@@ -39,7 +39,11 @@ app.use(cookieParser());
 // import routes 
 import healthcheckRouter from "./routes/healthcheck.routes.js";
 import userRouter from "./routes/user.routes.js";
-import { cookie } from "express/lib/response.js";
+//import { cookie } from "express/lib/response.js";
+
+//app.use(cookieParser()); we use like this
+
+import { errorHandler } from "./middlewares/error.middlewares.js";
 
 //we are inputting the users routes from the file
 //we are importing the router from the file
@@ -54,6 +58,6 @@ app.use("/api/v1/users", userRouter);
 
 //Registers the imported router for all endpoints that start with /api/v1/healthcheck
 
-
+app.use(errorHandler);
 export  { app };
 

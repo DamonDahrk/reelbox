@@ -13,7 +13,7 @@ updatedAt Date
 */
 
 import bcrypt from "bcrypt";
-import { type } from "express/lib/response";
+
 import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
 //destructure the schema so that we dont have to revisit it
