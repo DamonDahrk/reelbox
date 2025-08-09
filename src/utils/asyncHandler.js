@@ -7,3 +7,5 @@ const asyncHandler = (requestHandler) => {
 }
 
 export {asyncHandler}
+
+//based on response req we are sending in the requestHandler to handle error in try catch block
