@@ -29,7 +29,7 @@ const uploadOnCloudinary = async (localFilePath) => {
         //we return the response
     }
     catch (error) {
-        fs.unlinkSync(localFilePath)
+        fs.unlinkSync(localFilePath);
         return null
     }
     //we dont have to store the file in our server if it fails

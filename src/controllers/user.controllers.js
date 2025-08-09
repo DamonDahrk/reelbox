@@ -34,18 +34,18 @@ const existedUser = await User.findOne({
   //Standardized response and existing error 
   //now we are doing new user thingy:
 
-  const avatarLocalpath = req.files?.avatar[0]?.path;
+ const avatarLocalPath = req.files?.avatar?.[0]?.path;
   //handling in case of no files so the question mark here
   //now if file there and avatar not there we are handling that too
-  const coverLocalpath = req.files?.coverImage[0]?.path;
+  const coverLocalPath = req.files?.coverImage?.[0]?.path;
 
   if (!avatarLocalPath){ 
       throw new ApiError(400, "Avatar is required")
   }
 
-  const avatar = await uploadOnCloudinary(avatarLocalpath);
+  const avatar = await uploadOnCloudinary(avatarLocalPath);
   let coverImage = "";
-  if(coverLocalpath){
+  if(coverLocalPath){
   coverImage = await uploadOnCloudinary(coverImage);
   }
   //incase coverImage has been uploaded then only we are pushing it 
