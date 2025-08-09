@@ -25,6 +25,9 @@ app.use(express.static("public"));
 
 app.use(cookieParser());
 
+
+//that handles multipart/form-data requests, which are 
+// primarily used for uploading files
 //middleware for Express.js applications that parses the cookies 
 // attached to the client’s HTTP request
 // It populates req.cookies with cookie data for easy retrieval.
@@ -35,7 +38,11 @@ app.use(cookieParser());
 
 // import routes 
 import healthcheckRouter from "./routes/healthcheck.routes.js";
+import userRouter from "./routes/user.routes.js";
 import { cookie } from "express/lib/response.js";
+
+//we are inputting the users routes from the file
+//we are importing the router from the file
 
 //import route handlers exported from given fpath
 
@@ -43,6 +50,7 @@ import { cookie } from "express/lib/response.js";
 // routes
 
 app.use("/api/v1/healthcheck", healthcheckRouter);
+app.use("/api/v1/users", userRouter);
 
 //Registers the imported router for all endpoints that start with /api/v1/healthcheck
 
