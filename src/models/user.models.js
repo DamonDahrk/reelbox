@@ -73,7 +73,10 @@ const userSchema = new Schema(
 
 userSchema.pre("save", async function (next) {
 
-    if(!this.modified("password")) return next ()
+    if(!this.isModified("password")) return next ()
+
+        //this is isModified not the same as modified
+    //this is a mongoose method that checks if the password is modified
 
     //the password should only be modified at the time of save
     //or at the time of update, not any time else hence we exit 
