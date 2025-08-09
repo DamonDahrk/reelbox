@@ -1,0 +1,24 @@
+src -> this contains our source code
+controllers -> this contains our logic for health check routes  (eg responding with server status)
+ like healthcheck.controllers 
+
+ db/ -> index.js -> this is our db connection file
+ models -> this contains our models for our database and ORMs like Mongoose 
+
+ ORM full form is Object Relational Mapping
+ ORM is a technique that allows us to map our database tables to objects in our code
+
+ middlewares/ : Directory for our middlewares for request response middleware authentication
+ logging etc. 
+
+ routes/ : Directory for our routes for our application
+  like : Defines the API endpoints relating to system health and links routes to controller logic. healthcheck.routes
+ 
+ utils/: 
+
+ ApiError.js: Custom error handling logic.
+
+ApiResponse.js: Standardizes API responses.
+
+asyncHandler.js: Utility to handle async errors in route handlers (avoiding repetitive try/catch).
+
