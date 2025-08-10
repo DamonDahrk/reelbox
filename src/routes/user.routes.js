@@ -1,8 +1,10 @@
 import { Router } from "express";
 
-import { registerUser } from "../controllers/user.controllers.js";
+import { registerUser, logOutUser } from "../controllers/user.controllers.js";
 
 import {upload} from "../middlewares/multer.middlewares.js";
+
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
@@ -25,6 +27,12 @@ router.route("/register").post(
     ),
 
     registerUser);
+
+    //secured routes
+
+    router.route("/logout").post(verifyJWT, logOutUser);
+
+    //this is where next middle comes in from one to another 
 
 
 

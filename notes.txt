@@ -46,3 +46,19 @@ now the refresh token would be copied to db (new one) and refresh token and acce
 
 
 for logging out simply log out and delete the refresh token from db
+
+
+when user sends a req like logout , server needs to know who the user is, you can decode
+using controller(route handler) but you need to repeat the same code again and again,
+
+eg. actions like viewing profile making payment etc..
+
+middleware will automatically grab access token from req.cookies or header
+decode and verify it and extract the userId and attach it to req object
+
+now when req goes to controller you dont have to repeat the code again and again
+
+When making API requests (using tools like Postman)
+Authorization: Bearer <your_jwt_token>
+Postman streamlines this: if you select "Bearer Token"
+ in the Authorization tab, it formats this header automatically.
