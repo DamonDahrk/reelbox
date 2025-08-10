@@ -206,13 +206,17 @@ const logOutUser = asyncHandler(async (req, res) =>
   {
     await User.findByIdAndUpdate(
       
-    req.user._id,
+    req.user._id, //After validation, the middleware attaches the authenticated user's information to req.user.
+                  //  This means req.user is now an object representing the logged-in user.
     {
       $set: {
         refreshToken: undefined,
       },
     },
     { new: true }
+    //deleting the refresh token from the database
+    //new true ensures that the method will return the updated document after the update is applied
+
   );
 
     const options = {
