@@ -23,3 +23,26 @@ ApiResponse.js: Standardizes API responses.
 asyncHandler.js: Utility to handle async errors in route handlers (avoiding repetitive try/catch).
 
 install mongoose aggregate paginate
+
+Some details on access and refresh tokens:
+
+Both of them are generated on server level 
+we take the refresh token and we put that value in the database for now
+in generateAccessAndRefreshToken we store it in the user model 
+
+from server we are assigning to user access token (like 15min)
+and refresh token (like 1 day)
+
+but when you delete the refresh token from db it will make the user refresh
+token useless because it cant match it  
+
+since access token is short lived used would need to log in again and again
+which would be annoying so instead,
+
+once access -> 0, we send 401 to user, which will then cause the server to use
+
+/reftoken route which would freshly generate two refresh and access tokens,
+now the refresh token would be copied to db (new one) and refresh token and access token would be sent to user again
+
+
+for logging out simply log out and delete the refresh token from db
