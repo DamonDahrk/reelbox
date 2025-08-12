@@ -571,7 +571,7 @@ const getWatchHistory = asyncHandler (async (req,res) => {
 
   //internally setting multiple dependencies and pipelines to chain data
   //only view which is important
-  
+
   return res.status(200).json( new ApiResponse(200, user[0]?.watchHistory,
     "Watch history fetched succesfully"
   ))
@@ -590,4 +590,8 @@ export {registerUser,
 getCurrentUser,
 updateAccountDetails,
 updateUserAvatar,
-updateUserCoverImage}
+updateUserCoverImage,
+getWatchHistory,
+getUserChannelProfile
+
+}
