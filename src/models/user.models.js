@@ -23,7 +23,7 @@ const userSchema = new Schema(
         username: {
             type: String,
             required: true,
-            uninique: true,
+            unique: true,
             lowercase: true,
             trim: true,
             index: true
@@ -31,7 +31,7 @@ const userSchema = new Schema(
         email: {
             type : String,
             required: true,
-            uninique: true,
+            unique: true,
             lowercase: true,
             trim: true,
         },
@@ -81,7 +81,7 @@ userSchema.pre("save", async function (next) {
     //the password should only be modified at the time of save
     //or at the time of update, not any time else hence we exit 
 
-    this.password = bcrypt.hash(this.password, 12);
+    this.password = await bcrypt.hash(this.password, 12);
 
     //we are encrypting the password before it saves in db 12 meaning 12 
     // rounds of hashing so that the password is more secure
@@ -103,7 +103,7 @@ userSchema.methods.isPasswordCorrect = async function(password){
 //JWT tokens
 
 userSchema.methods.generateAccessToken = function () {
-    jwt.sign({
+    return jwt.sign({
         _id: this._id,
         email: this.email,
         username: this.username,
@@ -113,10 +113,10 @@ userSchema.methods.generateAccessToken = function () {
      process.env.ACCESS_TOKEN_SECRET, { 
         expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
     );
-}
+}                                                          //Fixed by adding return here
 
 userSchema.methods.generateRefreshToken = function () {
-    jwt.sign({
+    return jwt.sign({
         _id: this._id,
     },
      process.env.REFRESH_TOKEN_SECRET, { 

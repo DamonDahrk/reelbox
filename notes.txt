@@ -82,3 +82,6 @@ if the pw is modified, if it is it hashes it and saves it to db
 
 we find user id, then assign the new value and update, then we return
 the updated document , only doc with matching ID is updated. 
+
+-- Login is working because Log in working kind of  all this time I was trying to send wrong data , I should send it in Json format
+Register expects form data and log in expects json
