@@ -311,7 +311,7 @@ const changeCurrentPassword = asyncHandler ( async (req, res) =>
     const isPasswordCorrect =  
     await user.isPasswordCorrect(oldPassword);
 
-    if(!isPasswordCorrect) {
+    if(!isPasswordCorrect) {      //mixed up the passwords
       throw new ApiError(401, "Invalid old password");
     }
 
@@ -380,7 +380,7 @@ const updateUserAvatar = asyncHandler ( async (req, res) =>
 {
   // no need for body as this is just image
 
-  const avatarLocalPath = req.files?.path;
+  const avatarLocalPath = req.file?.path;   //NOT FILES BUT FILE
 
   if(!avatarLocalPath){
     throw new ApiError(400, "No image provided");
@@ -416,7 +416,7 @@ const updateUserCoverImage = asyncHandler ( async (req, res) =>
 {
 // no need for body as this is just image
 
-  const coverImageLocalPath = req.files?.path;
+  const coverImageLocalPath = req.file?.path;
 
   if(!coverImageLocalPath){
     throw new ApiError(400, "No image provided");
