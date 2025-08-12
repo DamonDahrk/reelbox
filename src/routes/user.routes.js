@@ -4,6 +4,7 @@ import { registerUser,
      logOutUser,
      loginUser,
       refreshAccessToken,
+      changeCurrentPassword,
       getCurrentUser,
       getUserChannelProfile,
       updateAccountDetails,
@@ -46,9 +47,9 @@ router.route("/register").post(
 
     //secured routes
 
-    router.route("/change-password").post(verifyJWT, getCurrentUser);
+    router.route("/change-password").post(verifyJWT, changeCurrentPassword);
     router.route("/logout").post(verifyJWT, logOutUser);
-    router.route("/current-user").get(verifyJWT, getCurrentUser);
+    router.route("/current-user").get(verifyJWT,getCurrentUser );
     router.route("/c/:username").get(verifyJWT, getUserChannelProfile);
     //this is why channel had the req dot param thing
     router.route("/update-account").patch(verifyJWT, 
