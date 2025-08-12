@@ -66,3 +66,19 @@ Postman streamlines this: if you select "Bearer Token"
  // userSchema.pre("save")
 in model for user is kinda like a middleware because it checks
 if the pw is modified, if it is it hashes it and saves it to db
+
+   //validateBeforeSave option in Mongoose determines whether 
+    // schema validation is automatically performed before 
+    // saving a document to the database
+
+    //findByIdAndUpdate mongoose operations where find and update is done 
+    as one atomic operation for efficiency, 
+
+   const user = await User.findByIdAndUpdate(
+  userId,
+  { name: "New Name" },
+  { new: true }
+);
+
+we find user id, then assign the new value and update, then we return
+the updated document , only doc with matching ID is updated. 
