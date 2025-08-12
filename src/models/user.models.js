@@ -133,4 +133,3 @@ export const User = mongoose.model("User", userSchema);
 // the schema we created above and use mongoose feature
 //we will mention the name of schema that we will use in the doc
 //This is a variable designed with Mongoose
-

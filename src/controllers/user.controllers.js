@@ -233,11 +233,11 @@ const logOutUser = asyncHandler(async (req, res) =>
       new ApiResponse(
         200, {},
       "User logged out successfully"))
-   
-    
-
 
 });
+
+//reminder: await wait untils the method is completed until 
+//while it waits for the variable, the surrounding func is paused
 
 
 const refreshAccessToken = asyncHandler( async (req, res) =>
@@ -302,7 +302,161 @@ const refreshAccessToken = asyncHandler( async (req, res) =>
        
     });
        
+const changeCurrentPassword = asyncHandler ( async (req, res) =>
+{
+    const {oldPassword, newPassword} = req.body;
+
+    const user = await User.findById(req.user?._id);
+
+    const isPasswordCorrect =  
+    await user.isPasswordCorrect(oldPassword);
+
+    if(!isPasswordValid) {
+      throw new ApiError(401, "Invalid old password");
+    }
+
+    user.password = newPassword;
+    await user.save({validateBeforeSave : false });
+
+    //validateBeforeSave option in Mongoose determines whether 
+    // schema validation is automatically performed before 
+    // saving a document to the database
+
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        {message: "Password changed successfully"},
+        "Password changed successfully"
+      )
+    )
+  
+});
 
 
 
-export {registerUser, loginUser, refreshAccessToken, logOutUser}
+const getCurrentUser = asyncHandler ( async (req, res) =>
+{
+    return res.status(200).json(
+      new ApiResponse(
+        200, req.user,
+  
+        "User details fetched successfully"
+      )
+    )
+});
+
+const updateAccountDetails = asyncHandler ( async (req, res) =>
+{
+    const {fullname, email} = req.body;
+
+    if(!fullname || !email) {
+      throw new ApiError(400, "Please provide fullname and email");
+    }
+
+    //notes on findByIdAndUpdate() mongoose operation
+
+    const user = await User.findByIdAndUpdate(
+      req.user?._id,
+      {
+        $set: {
+          fullname,
+          email: email
+        }
+      },
+      {new: true}).select("-password -refreshToken");
+
+      return res.status(200).json(
+        new ApiResponse(
+          200, user,
+  
+          "User details updated successfully"
+        )
+      )
+});
+
+
+
+const updateUserAvatar = asyncHandler ( async (req, res) =>
+{
+  // no need for body as this is just image
+
+  const avatarLocalPath = req.files?.path;
+
+  if(!avatarLocalPath){
+    throw new ApiError(400, "No image provided");
+  }
+
+  const avatar = await uploadOnCloudinary(avatarLocalPath);
+  //we got avatar back
+  
+  if(!avatar.url){
+    throw new ApiError(500, 
+      "Something went wrong while uploading the image")
+  }
+
+  const user = await User.findByIdAndUpdate(req.user?._id, {
+    $set: {
+      avatar: avatar.url
+    }
+    },
+  {new: true}
+).select("-password -refreshToken");
+
+res.status(200).json(
+  new ApiResponse(
+    200, user,
+  
+    "Avatar details updated successfully"
+  )
+)
+});
+
+
+const updateUserCoverImage = asyncHandler ( async (req, res) =>
+{
+// no need for body as this is just image
+
+  const coverImageLocalPath = req.files?.path;
+
+  if(!coverImageLocalPath){
+    throw new ApiError(400, "No image provided");
+  }
+
+  const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+  //we got avatar back
+  
+  if(!coverImage.url){
+    throw new ApiError(500, 
+      "Something went wrong while uploading the image")
+  }
+
+  const user = await User.findByIdAndUpdate(req.user?._id, {
+    $set: {
+      coverImage: coverImage.url
+    }
+    },
+  {new: true}
+).select("-password -refreshToken");
+
+res.status(200).json(
+  new ApiResponse(
+    200, user,
+  
+    "Cover Image details updated successfully"
+  )
+)
+});
+
+
+
+
+
+export {registerUser,
+   loginUser,
+    refreshAccessToken, 
+    logOutUser,
+  changeCurrentPassword,
+getCurrentUser,
+updateAccountDetails,
+updateUserAvatar,
+updateUserCoverImage}

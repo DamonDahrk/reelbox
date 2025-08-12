@@ -62,3 +62,7 @@ When making API requests (using tools like Postman)
 Authorization: Bearer <your_jwt_token>
 Postman streamlines this: if you select "Bearer Token"
  in the Authorization tab, it formats this header automatically.
+
+ // userSchema.pre("save")
+in model for user is kinda like a middleware because it checks
+if the pw is modified, if it is it hashes it and saves it to db
